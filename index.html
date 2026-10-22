@@ -124,6 +124,7 @@
       .chip .chip-label { display: block; font-size: 12px; font-weight: 600; color: var(--ink-soft); line-height: 1.35; margin-top: 2px; }
       .chip[aria-pressed="true"] { border-color: var(--red); background: var(--red-soft); }
       .chip[aria-pressed="true"] .chip-rate { color: var(--red); }
+      .chip-wide { grid-column: 1 / -1; }
       .custom-growth { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
       .custom-growth input { width: 110px; font-family: "IBM Plex Mono", monospace; font-weight: 700; }
       .custom-growth .unit { font-family: "IBM Plex Mono", monospace; font-weight: 700; color: var(--ink-soft); }
@@ -245,6 +246,20 @@
       .split-row .amt { font-family: "IBM Plex Mono", monospace; font-weight: 700; text-align: right; font-size: 15.5px; }
       .split-note { font-size: 13px; color: var(--ink-soft); margin-top: 14px; border-top: 1px dashed var(--line); padding-top: 12px; }
 
+      /* ---------- Official record ---------- */
+      .record-card { margin-top: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+      .record-row { display: grid; grid-template-columns: 200px 1fr 152px; gap: 12px; align-items: center; padding: 7px 0; }
+      @media (max-width: 640px) { .record-row { grid-template-columns: 1fr auto; } .record-row .bar-track { grid-column: 1 / -1; order: 3; } }
+      .record-row .who { font-weight: 700; font-size: 14.5px; }
+      .record-row .who small { display: block; font-weight: 600; color: var(--ink-soft); font-size: 12px; }
+      .record-row .amt { font-family: "IBM Plex Mono", monospace; font-weight: 700; text-align: right; font-size: 15.5px; }
+      .record-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+      @media (max-width: 640px) { .record-stats { grid-template-columns: 1fr; } }
+      .record-stat { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+      .record-stat .rs-value { display: block; font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 24px; color: var(--red); }
+      .record-stat .rs-label { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+      .record-card a { color: var(--navy); font-weight: 600; }
+
       .sources { margin-top: 56px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
       .sources h2 { margin: 0 0 14px; font-size: 20px; font-weight: 800; }
       .sources ul { margin: 0; padding-left: 20px; color: var(--ink-soft); font-size: 14.5px; }
@@ -315,6 +330,10 @@
               <button type="button" class="chip" data-growth="8.9" aria-pressed="true">
                 <span class="chip-rate">8.9%</span>
                 <span class="chip-label">Zillow 2020–2025 average for Mason County</span>
+              </button>
+              <button type="button" class="chip chip-wide" data-growth="9.6" aria-pressed="false">
+                <span class="chip-rate">9.6%</span>
+                <span class="chip-label">The assessor's actual pace — Mason County home assessments, 2023–2025 (State Tax Dept)</span>
               </button>
             </div>
             <div class="custom-growth">
@@ -399,6 +418,38 @@
         </div>
       </div>
 
+      <!-- ============ OFFICIAL RECORD ============ -->
+      <section class="context">
+        <h2>The state's own books: home assessments jumped 20% in two years</h2>
+        <p class="intro">This isn't an estimate or a housing website. It's the West Virginia State Tax Department's
+        official county tables — the total assessed value of Mason County homes (Class II residential), tax year by tax year.</p>
+        <div class="record-card">
+          <div class="record-row">
+            <div class="who">Tax Year 2023<small>Class II residential assessed value</small></div>
+            <div class="bar-track"><div class="bar-fill" style="width:83.3%"></div></div>
+            <div class="amt">$485,689,600</div>
+          </div>
+          <div class="record-row">
+            <div class="who">Tax Year 2025<small>Class II residential assessed value</small></div>
+            <div class="bar-track"><div class="bar-fill red" style="width:100%"></div></div>
+            <div class="amt">$583,015,370</div>
+          </div>
+          <div class="record-stats">
+            <div class="record-stat"><span class="rs-value">+20.0%</span><span class="rs-label">in two tax years</span></div>
+            <div class="record-stat"><span class="rs-value">≈9.6% / yr</span><span class="rs-label">the assessor's actual pace</span></div>
+            <div class="record-stat"><span class="rs-value">+$97.3M</span><span class="rs-label">added to the home tax base</span></div>
+          </div>
+          <p class="split-note">Assessed value is 60% of appraised value, and West Virginia reappraises on a three-year
+          cycle — so assessments lag the market, then catch up in a jump. That's what happened here. Commercial property
+          (Class III &amp; IV) was essentially flat over the same two years: nearly all of this growth landed on homes.
+          And your levy bill is charged on assessed value — so when assessments climb, your bill climbs with them, at the
+          same "unchanged" rate. Source: WV State Tax Department, <em>Classified Assessed Valuations, Taxes Levied</em> —
+          <a href="https://Tax.WV.Gov/Documents/PropertyTax/2023/ClassifiedAssessedValuations.TaxesLevied.2023.pdf" target="_blank" rel="noopener noreferrer">Tax Year 2023 report</a> ·
+          <a href="https://tax.wv.gov/Documents/PropertyTax/2025/ClassifiedAssessedValuations.TaxesLevied.2025.pdf" target="_blank" rel="noopener noreferrer">Tax Year 2025 report</a>.
+          Try it above: the 9.6% growth preset runs your own home at the assessor's actual pace.</p>
+        </div>
+      </section>
+
       <!-- ============ CONTEXT ============ -->
       <section class="context">
         <h2>Three things the other calculator doesn't show you</h2>
@@ -473,6 +524,7 @@
           <li><strong>Assessment ratio:</strong> West Virginia assesses property at 60% of appraised (market) value.</li>
           <li><strong>Levy revenue:</strong> the ballot's own estimate is about $9.92 million per year for the school system.</li>
           <li><strong>Growth default (8.9%/yr):</strong> Zillow Home Value Index, Mason County WV — $100,608 in January 2020 to $153,880 in January 2025, a 53% rise in five years. Assessed values can climb faster than market values in reappraisal years as assessments catch up.</li>
+          <li><strong>Assessed-value growth (9.6%/yr preset):</strong> WV State Tax Department, <em>Classified Assessed Valuations, Taxes Levied</em> — Mason County Class II residential assessed values rose from $485,689,600 in Tax Year 2023 to $583,015,370 in Tax Year 2025, up 20.0% in two tax years (about 9.6% a year). Reports: <a href="https://Tax.WV.Gov/Documents/PropertyTax/2023/ClassifiedAssessedValuations.TaxesLevied.2023.pdf" target="_blank" rel="noopener noreferrer">Tax Year 2023</a> · <a href="https://tax.wv.gov/Documents/PropertyTax/2025/ClassifiedAssessedValuations.TaxesLevied.2025.pdf" target="_blank" rel="noopener noreferrer">Tax Year 2025</a> · <a href="https://Tax.wv.gov/Documents/Reports/2020/ClassifiedAssessedValuationsTaxesLevied.2020.pdf" target="_blank" rel="noopener noreferrer">Tax Year 2020</a>.</li>
           <li><strong>Data-center figures:</strong> West Virginia Treasury report, October 13, 2026 ($231M total; $90.3M/yr for schools only with an excess levy in place). Treasurer Pack's statements as reported by WSAZ, October 15, 2026.</li>
           <li><strong>Reserves:</strong> $14.6M per the district's current budget figures; FY2024-25 adopted budget (May 28, 2024) showed $4,915,203 across the General Current Expense and Special Revenue funds.</li>
           <li><strong>Method:</strong> each year's levy = (home value grown at the rate you select)<sup>n</sup> × 60% ÷ 100 × the levy rate in dollars (45.90¢ = $0.4590 for Class II). This is an illustration based on the assumptions you choose — your actual bill depends on your assessment.</li>
